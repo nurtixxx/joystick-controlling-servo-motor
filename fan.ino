@@ -1,23 +1,30 @@
-#include <Joystick.h>
 #include <Servo.h>
 
 Servo myServo;
-const int joystickXPin = A0; // Pin connected to joystick X-axis
+
+int joystickXPin = A0; // Pin for joystick X-axis
+int centerAngle = 90; // Center position of the servo (90 degrees)
+int servoPin = 9; // Pin for connecting the servo motor
+int deadZone = 20; // Dead zone for the joystick
 
 void setup() {
-  myServo.attach(9); // Attach the servo to pin 9
-  pinMode(joystickXPin, INPUT); // Set joystick pin as input
+  myServo.attach(servoPin); // Attach the servo motor to the pin
+  myServo.write(centerAngle); // Set the servo to the initial center position
+  Serial.begin(9600); // For debugging
 }
 
 void loop() {
-  int joystickX = analogRead(joystickXPin); // Read X-axis value
-  
-  // Assuming joystick returns values from 0 to 1023
-  if (joystickX > 512) { // Adjust threshold as needed
-    myServo.write(0); // Move servo to 0 degrees
-  } else if (joystickX < 100) {
-    myServo.write(180); // Move servo to 180 degrees
+  int joystickXVal = analogRead(joystickXPin); // Read the joystick X-axis value
+  int angle = map(joystickXVal, 0, 1023, 0, 180); // Map the value to a range from 0 to 180 degrees
+
+  // Check if the value is in the dead zone (when the joystick is released)
+  if (joystickXVal > 512 - deadZone && joystickXVal < 512 + deadZone) {
+    // If the joystick is in the dead zone, return to center position
+    myServo.write(centerAngle);
+  } else {
+    // If the joystick is moved, set the servo to the corresponding angle
+    myServo.write(angle);
   }
-  
-  delay(600); // Small delay for stability
+
+  delay(15); // Small delay for smoother operation
 }
