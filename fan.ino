@@ -15,7 +15,7 @@ void loop() {
   // Assuming joystick returns values from 0 to 1023
   if (joystickX > 512) { // Adjust threshold as needed
     myServo.write(0); // Move servo to 0 degrees
-  } else if (joystickX < 512) {
+  } else if (joystickX < 100) {
     myServo.write(180); // Move servo to 180 degrees
   }
   
