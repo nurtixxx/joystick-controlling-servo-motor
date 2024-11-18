@@ -1,6 +1,32 @@
-## **CODE DESCRIPTION**
+## 📜 How the Code Works
 
-This code allows the servo motor to turn in response to the joystick movement. When the joystick is turned left, the servo motor turns left, and when the joystick is turned right, the servo motor turns right.
+This code allows you to control a servo motor using the X-axis of a joystick. The servo smoothly adjusts its position based on the joystick's movement, with a dead zone for stability when the joystick is at rest. Here's how it works:
+
+### Key Components:
+1. **Servo Motor**: The motor that rotates to specific angles between 0° and 180°.
+2. **Joystick**: Used to control the servo motor. Only the X-axis of the joystick is used in this code.
+
+### Code Breakdown:
+1. **Setup Phase** (`setup()` function):
+   - The servo motor is attached to the specified pin (`servoPin`).
+   - The initial position of the servo motor is set to **90°** (center).
+   - Serial communication is initialized for debugging purposes.
+
+2. **Main Loop** (`loop()` function):
+   - The joystick's X-axis value is read using `analogRead()`. This value ranges from **0** (fully left) to **1023** (fully right).
+   - The joystick value is converted to an angle (0° to 180°) using the `map()` function.
+
+3. **Dead Zone**:
+   - A **dead zone** is defined around the joystick's center position (value ≈ 512).  
+     This prevents unnecessary movement of the servo when the joystick is slightly off-center or released.
+   - If the joystick is in the dead zone:
+     - The servo motor gradually returns to its **center position (90°)** for smoother behavior.
+   - If the joystick is moved out of the dead zone:
+     - The servo moves to the angle corresponding to the joystick's position.
+
+4. **Smooth Movement**:
+   - A small delay (`delay(15)`) ensures smooth and stable operation of the servo motor.
+
 
 ---
 
