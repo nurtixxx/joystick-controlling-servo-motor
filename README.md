@@ -1,4 +1,4 @@
-## 📜 How the Code Works
+## 📜 How the Code Works  
 
 This code allows you to control a servo motor using the X-axis of a joystick. The servo smoothly adjusts its position based on the joystick's movement, with a dead zone for stability when the joystick is at rest. Here's how it works:
 
